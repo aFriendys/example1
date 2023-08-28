@@ -1,5 +1,3 @@
-type TCellValueResult = [boolean, string];
-
 const sumCellValues = (cellId: string[]):number | never =>{
   const cellValue: string[] = [];
   try{
