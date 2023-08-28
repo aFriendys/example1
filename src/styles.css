@@ -1,0 +1,39 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.table {
+  width: 400px;
+  height: 300px;
+}
+
+.cell {
+  display: inline-block;
+  width: 60px;
+  height: 20px;
+  border: 1px solid black;
+  margin: 1px;
+  padding: 3px;
+}
+
+.cell input {
+  width: 52px;
+  border: none;
+}
+
+.cell input:focus {
+  outline: none;
+}
+
+.alert {
+  position: fixed;
+  left: 25%;
+  top: 25%;
+  z-index: 10;
+  width: 100px;
+  height: 50px;
+  background-color: gainsboro;
+  color: red;
+  font-weight: bold;
+}
