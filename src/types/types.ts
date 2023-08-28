@@ -8,7 +8,7 @@ export interface ITable {
 export interface ITableRow {
   columns: number;
   isHeader?: boolean;
-  index?: number;
+  index?: number | string;
 }
 
 export interface ITableCell {

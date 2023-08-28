@@ -1,50 +1,41 @@
 type TCellValueResult = [boolean, string];
 
-const getCellValue = (cellId: string[]):string[] => {
+const sumCellValues = (cellId: string[]):number | never =>{
   const cellValue: string[] = [];
+  try{
   for (let index in cellId) {
     cellValue.push(
       (document.getElementById(cellId[index].trim()) as HTMLInputElement).value
     );
   }
-  return cellValue;
-};
+}catch{
+  throw new Error('Cell with specified id not found')
+}
 
-const sum = (cellValue: string[]): number => {
   return cellValue
     .map((value) => parseInt(value))
     .reduce((value, acc) => (acc += value), 0);
-};
+}
 
-export const calculateCellValue = (value: string): TCellValueResult => {
+export const calculateCellValue = (value: string): string | never => {
   let operand = value
       .slice(value.indexOf("=") + 5, value.length - 1)
-      .split(","),
-    cellValue;
-
-  try {
-    cellValue = getCellValue(operand);
-  } catch {
-    return [true, "Сell with specified id not found"];
-  }
+      .split(",")
 
   const operator = value.substring(1, 4);
 
   switch (operator) {
     case "sum":
-      return [false, "" + sum(cellValue)];
+      return "" + sumCellValues(operand);
 
     case "avg":
-      return [false, "" + sum(cellValue) / operand.length];
+      return "" + sumCellValues(operand) / operand.length;
 
     default:
       try {
-        return [
-          false,
-          "" + eval(value.slice(value.indexOf("=") + 1, value.length)),
-        ];
+        return "" + eval(value.slice(value.indexOf("=") + 1, value.length))
       } catch {
-        return [true, "Invalid formula"];
+        throw new Error('Invalid formula')
       }
   }
 };

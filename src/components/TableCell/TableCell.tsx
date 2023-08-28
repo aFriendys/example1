@@ -19,17 +19,21 @@ export function TableCell({ id }: ITableCell): JSX.Element {
 
   const onKeyUpHandler = ({ key }: KeyboardEvent<HTMLInputElement>): void => {
     if (key !== "Enter" || !value.startsWith("=")) return;
-    const [isError, result] = calculateCellValue(value);
-    if (isError) {
-      setFormula(() => value);
+    
+    try{
+      const result = calculateCellValue(value);
       setValue(() => result);
-      input.current?.blur();
-    } else {
+    }catch(error){
+      if(error instanceof Error) {
+        const {message} = error
+        setValue(() => message)
+      }
+    }finally{
       setFormula(() => value);
-      setValue(() => result);
       input.current?.blur();
     }
   };
+  
   return (
     <td>
       <input
